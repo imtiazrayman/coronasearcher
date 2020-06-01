@@ -1,0 +1,68 @@
+<HTML>
+  <head>
+    <title>Coronavirus Checker</title>
+  </head>
+<center>
+  <H1 style="background-color: orange;">Coronavirus Symptom Analyzer</H1>
+  <hr>
+  <h2>Coronavirus/Covid-19 Status</h2>
+    <hr>
+    <h2 id="hello">Information</h2>
+    <p id="userentry"></p>
+    <p id="SymptomsFound"></p>
+    <p id="status"></p>
+    <br>
+    <p id="response"></p>
+    <p id="responses"><h1 id = "found"></h></p>
+    <br>
+
+
+    <SCRIPT LANGUAGE="javascript">
+      var symptoms = ["fever", "Fever", "FEVER", "FeVeR", "feVEr", "fEvEr", "FEVer", "fev", "Fev", "feve", "Feve", "fe", "Fe"];
+      var response = ["You have a fever.", "You have a fever."];
+      var result = 0;
+      var symptomsFound = 0;
+      var whichSymptoms = [];
+      var arr = [];
+
+      var searchword = prompt("Enter in some of your symptoms: ");
+      document.getElementById("userentry").innerHTML = "User Entry: " + searchword;
+
+        for (i = 0; i < symptoms.length; i++)
+        {
+          if (searchword.includes(symptoms[i])) // partial search here
+          {
+            document.getElementById("SymptomsFound").innerHTML = "Symptoms Found : " + response[0] + "\n";
+            //document.writeln("Symptoms Found : " + response[i] + "\n");
+            symptomsFound++;
+            whichSymptoms.push(i);
+            result = 1;
+          }
+        }
+        if (result == 1) {
+          document.getElementById("status").innerHTML = "You have 1 symptom found which are linked to the corona virus." + "\n";
+          searchword = prompt("How is your fever : little, mild, severe, or intense?");
+          var feverType = ["little", "mild", "severe", "intense"];
+          var feverResponse = ["It appears that you have a little fever which requires some rest and warm liquids. Please contact your physician if symptoms progress.",
+            "It appears that you have a mild fever which requires some rest and warm liquids. Please contact your physician if symptoms progress.",
+            "It appears that you have a severe. Please contact your physican or seek medical attention by calling 911.", "It appears that you have an Intense fever. Please contact your physican or seek medical attention by calling 911."
+          ];
+
+          for (i = 0; i < feverType.length; i++) {
+            if (searchword.includes(feverType[i])) // partial search here
+            {
+              document.getElementById("response").innerHTML = "Response : " + feverResponse[i] + "\n";
+              document.getElementById("found").innerHTML = "Fever";
+              document.getElementById("found").style.color = 'green';
+            }
+          }
+        }
+
+        if (result == 0){
+          document.getElementById("response").innerHTML = "Sorry, NO MATCH      for: " + searchword;
+          document.getElementById("response").style.color = "red";
+        }
+    </SCRIPT>
+</center>
+
+</HTML>
