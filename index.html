@@ -1,21 +1,27 @@
 <HTML>
-  <head>
-    <title>Coronavirus Checker</title>
-  </head>
+<head>
+  <title>Coronavirus Checker</title>
+</head>
 <center>
   <H1 style="background-color: orange;">Coronavirus Symptom Analyzer</H1>
   <hr>
   <h2>Coronavirus/Covid-19 Status</h2>
-    <hr>
-    <h2 id="hello">Information</h2>
-    <p id="userentry"></p>
-    <p id="SymptomsFound"></p>
-    <p id="status"></p>
-    <br>
-    <p id="response"></p>
-    <p id="responses"><h1 id = "found"></h></p>
-    <br>
-
+  <h2 style="background-color: orange;">Coronavirus Color Output Key</h2>
+  <div style="background-color: grey;">
+    <h3><span style="color: GreenYellow;">Green</span> represents that your fever is of <span style="color: GreenYellow;">(minor/little)</span> intensity</h3>
+    <h3><span style="color: yellow;">Yellow</span> represents your fever is of <span style="color: yellow;">(mild)</span> intensity</h3>
+    <h3><span style="color: orange;">Orange</span> represents that your fever is of <span style="color: orange;">(severe)</span> intensity</h3>
+    <h3><span style="color: red;">Red</span> represents that your fever is of <span style="color: red;">(intense)</span> intensity</h3>
+  </div>
+  <h2 id="hello" style="background-color: orange">Output Information</h2>
+  <h3 id="userentry"></h2>
+  <h3 id="SymptomsFound"></h2>
+  <h3 id="status"></h2>
+  <h2 style="background-color: orange" >Calculated Response</h2>
+  <h3 id="response"></h2>
+  <h2 id="responses">
+  <h2 id="found" style="background-color: grey;">
+  </h2>
 
     <SCRIPT LANGUAGE="javascript">
       var symptoms = ["fever", "Fever", "FEVER", "FeVeR", "feVEr", "fEvEr", "FEVer", "fev", "Fev", "feve", "Feve", "fe", "Fe"];
@@ -24,44 +30,55 @@
       var symptomsFound = 0;
       var whichSymptoms = [];
       var arr = [];
-
       var searchword = prompt("Enter in some of your symptoms: ");
       document.getElementById("userentry").innerHTML = "User Entry: " + searchword;
-
-        for (i = 0; i < symptoms.length; i++)
+      for (i = 0; i < symptoms.length; i++) {
+        if (searchword.includes(symptoms[i])) // partial search here
         {
-          if (searchword.includes(symptoms[i])) // partial search here
+          document.getElementById("SymptomsFound").innerHTML = "Symptoms Found : " + response[0] + "\n";
+          symptomsFound++;
+          whichSymptoms.push(i);
+          result = 1;
+        }
+      }
+      if (result == 1) {
+        document.getElementById("status").innerHTML = "You have 1 symptom found which are linked to the corona virus." + "\n";
+        searchword = prompt("How is your fever : little, mild, severe, or intense?");
+        var feverType = ["little", "mild", "severe", "intense"];
+        var feverResponse = ["It appears that you have a little fever which requires some rest and warm liquids. Please contact your physician if symptoms progress.",
+          "It appears that you have a mild fever which requires some rest and warm liquids. Please contact your physician if symptoms progress.",
+          "It appears that you have a severe. Please contact your physican or seek medical attention by calling 911.", "It appears that you have an Intense fever. Please contact your physican or seek medical attention by calling 911."
+        ];
+        for (i = 0; i < feverType.length; i++) {
+          if (searchword.includes(feverType[i])) // partial search here
           {
-            document.getElementById("SymptomsFound").innerHTML = "Symptoms Found : " + response[0] + "\n";
-            //document.writeln("Symptoms Found : " + response[i] + "\n");
-            symptomsFound++;
-            whichSymptoms.push(i);
-            result = 1;
-          }
-        }
-        if (result == 1) {
-          document.getElementById("status").innerHTML = "You have 1 symptom found which are linked to the corona virus." + "\n";
-          searchword = prompt("How is your fever : little, mild, severe, or intense?");
-          var feverType = ["little", "mild", "severe", "intense"];
-          var feverResponse = ["It appears that you have a little fever which requires some rest and warm liquids. Please contact your physician if symptoms progress.",
-            "It appears that you have a mild fever which requires some rest and warm liquids. Please contact your physician if symptoms progress.",
-            "It appears that you have a severe. Please contact your physican or seek medical attention by calling 911.", "It appears that you have an Intense fever. Please contact your physican or seek medical attention by calling 911."
-          ];
-
-          for (i = 0; i < feverType.length; i++) {
-            if (searchword.includes(feverType[i])) // partial search here
-            {
+            if(i == 0){
               document.getElementById("response").innerHTML = "Response : " + feverResponse[i] + "\n";
-              document.getElementById("found").innerHTML = "Fever";
-              document.getElementById("found").style.color = 'green';
+              document.getElementById("found").innerHTML = "Fever (Little/Minor)";
+              document.getElementById("found").style.color = 'GreenYellow';
             }
+            if(i == 1){
+              document.getElementById("response").innerHTML = "Response : " + feverResponse[i] + "\n";
+              document.getElementById("found").innerHTML = "Fever (mild)";
+              document.getElementById("found").style.color = 'yellow';
+            }
+            if(i == 2){
+            document.getElementById("response").innerHTML = "Response : " + feverResponse[i] + "\n";
+            document.getElementById("found").innerHTML = "Fever (Severe)";
+            document.getElementById("found").style.color = 'orange';
+            }
+            if(i == 3){
+            document.getElementById("response").innerHTML = "Response : " + feverResponse[i] + "\n";
+            document.getElementById("found").innerHTML = "Fever (Intense)";
+            document.getElementById("found").style.color = 'red';
+          }
           }
         }
-
-        if (result == 0){
-          document.getElementById("response").innerHTML = "Sorry, NO MATCH      for: " + searchword;
-          document.getElementById("response").style.color = "red";
-        }
+      }
+      if (result == 0) {
+        document.getElementById("response").innerHTML = "Sorry, NO MATCH      for: " + searchword;
+        document.getElementById("response").style.color = "red";
+      }
     </SCRIPT>
 </center>
 
